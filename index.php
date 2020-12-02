@@ -8,7 +8,7 @@
 
 	#Funciones relacionadas con tipos de datos
 	gettype($variable); //-> devuelve el tipo de dato
-  settype($variable, 'nuevo tipo'); //-> cambia el tipo
+  	settype($variable, 'nuevo tipo'); //-> cambia el tipo
 	isset($variable); //-> Dice si la variable esta definida
 	unset($variable); //-> Destruye la variable
 
