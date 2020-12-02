@@ -482,20 +482,116 @@
 
 		#Herencia
 
-		class Producto {
+		abstract class Producto {
 
-			protected $codigo = 1;
+			protected $codigo;
 			protected $precio;
+		
+		
+			protected function __construct($data) {
+				$this->codigo = $data['codigo'];
+				$this->precio = $data['precio'];
+			} 
+		
+			protected function __get($name) {
+		
+				switch ($name) {
+		
+					case 'Codigo':
+						return $this->codigo;
+						break;
+					case 'Precio':
+						return $this->precio;
+				}
+			}
 
-			public function getPrecio() {
-				return $this->precio;
+			protected function __set($name, $value) {
+		
+				switch ($name) {
+		
+					case 'Codigo':
+						$this->codigo = $value;
+						break;
+					case 'Precio':
+						$this->precio = $value;
+				}
 			}
 		}
-
+		
 		class TV extends Producto {
 			
 			private $pulgadas;
 			private $tecnologia;
+		
+			public function __construct($data) {
+		
+				parent::__construct($data); // Llamo al constructor padre
+				$this->pulgadas = $data['pulgadas'];
+				$this->tecnologia = 'Oled';
+			}
+		
+			public function __get($name) {
+		
+				switch ($name) {
+		
+					case 'Pulgadas':
+						return $this->pulgadas;
+						break;
+					case 'Tecnologia':
+						return $this->tecnologia;
+						break;
+					default :
+						return parent::__get($name);
+				}
+			}
+
+			public function __set($name, $value) {
+		
+				parent::__set($name, $value);
+				switch ($name) {
+		
+					case 'Pulgadas':
+						$this->pulgadas = $value;
+						break;
+					case 'Tecnologia':
+						$this->tecnologia = $value;
+						break;
+				}
+			}
+		}
+		
+		$data = ["codigo" => 1, "precio" => 123, "pulgadas" => 12, "tecnologia" => "Oled"]; 
+		$tv = new TV($data); //Le pasamos array asociativo con el nombre de los atributos.
+		echo $tv->Codigo; //Utilizo el get
+		$tv->Codigo = 5; //Utilizo el set
+		echo $tv->Codigo; //Utilizo el get
+
+		#Metodos Herencia
+
+		get_parent_class($objeto); //Devuelve el nombre de la clase Padre
+		is_subclass_of($objeto, 'Nombre_Clase_Padre'); //Devuelve true si es hijo o false si no.
+
+	
+		#Interfaces
+
+		//Se puede utilizar para herencia multiple
+		interface iProducto {
+			//Todos los métodos deben ser públicos
+			public function muestraProducto();
+		}
+	
+		class Tv extends Producto implements iMuestra {
+
+			//Al implementar la interfaz estamos obligados a sobreescribir los métodos
 		}
 
+		#Herencia de interfaces
+
+		interface iA {
+			public function foo();
+		}
+
+		interface iB extends iA {
+			public function baz(Baz $baz);
+		}
 ?>

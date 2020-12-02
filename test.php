@@ -1,6 +1,6 @@
 <?php 
 
-class Producto {
+abstract class Producto {
 
 	protected $codigo;
 	protected $precio;
@@ -51,12 +51,17 @@ class TV extends Producto {
 				return $this->tecnologia;
 				break;
 			default :
-				parent::__get($name);
+				return parent::__get($name);
 		}
 	}
 }
 
 $data = ["codigo" => 1, "precio" => 123, "pulgadas" => 12, "tecnologia" => "Oled"];
 $tv = new TV($data);
+echo $tv->Codigo . '<br>';
+$tv->Codigo = 5;
 echo $tv->Codigo;
+
+echo '<br>' . get_parent_class($tv);
+echo '<br>' . is_subclass_of($tv, 'Producto');
 ?>
